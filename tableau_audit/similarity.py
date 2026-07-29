@@ -6,6 +6,7 @@ Flags likely-duplicate worksheets using a weighted similarity score built from:
 
 Score is 0.0-1.0. Anything above the threshold (default 0.85) is flagged as a
 likely duplicate pair worth consolidating.
+Random Commment
 """
 
 from __future__ import annotations
