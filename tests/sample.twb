@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<workbook>
+  <datasources>
+    <datasource name="Superstore" caption="Superstore">
+      <column name="[Sales]" caption="Sales" datatype="real" role="measure" type="quantitative" />
+      <column name="[Region]" caption="Region" datatype="string" role="dimension" type="nominal" />
+      <column name="[Category]" caption="Category" datatype="string" role="dimension" type="nominal" />
+      <column name="[Profit Ratio]" caption="Profit Ratio" role="measure" type="quantitative">
+        <calculation class="tableau" formula="SUM([Profit])/SUM([Sales])" />
+      </column>
+      <column name="[Unused Calc]" caption="Unused Calc" role="measure" type="quantitative">
+        <calculation class="tableau" formula="SUM([Sales]) * 2" />
+      </column>
+      <column name="[High Value Regions]" caption="High Value Regions" role="dimension" type="nominal">
+        <groupfilter function="union" />
+      </column>
+      <column name="[Unused Group]" caption="Unused Group" role="dimension" type="nominal">
+        <groupfilter function="union" />
+      </column>
+    </datasource>
+    <datasource name="Parameters" caption="Parameters">
+      <column name="[Parameter 1]" caption="Top N" param-domain-type="range" />
+      <column name="[Parameter 2]" caption="Unused Param" param-domain-type="range" />
+    </datasource>
+  </datasources>
+
+  <worksheets>
+    <worksheet name="Sales by Region">
+      <table>
+        <view>
+          <datasource-dependencies datasource="Superstore">
+            <column name="[Sales]" />
+            <column name="[Region]" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[Region]" />
+        </view>
+        <panes>
+          <pane>
+            <mark class="Bar" />
+            <encodings>
+              <color column="[Region]" />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>[Superstore].[Sales]</rows>
+        <cols>[Superstore].[Region]</cols>
+      </table>
+    </worksheet>
+
+    <worksheet name="Sales by Region (Copy)">
+      <table>
+        <view>
+          <datasource-dependencies datasource="Superstore">
+            <column name="[Sales]" />
+            <column name="[Region]" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[Region]" />
+        </view>
+        <panes>
+          <pane>
+            <mark class="Bar" />
+            <encodings>
+              <color column="[Region]" />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>[Superstore].[Sales]</rows>
+        <cols>[Superstore].[Region]</cols>
+      </table>
+    </worksheet>
+
+    <worksheet name="Profit Ratio by Category">
+      <table>
+        <view>
+          <datasource-dependencies datasource="Superstore">
+            <column name="[Profit Ratio]" />
+            <column name="[Category]" />
+          </datasource-dependencies>
+        </view>
+        <panes>
+          <pane>
+            <mark class="Line" />
+          </pane>
+        </panes>
+      </table>
+    </worksheet>
+
+    <worksheet name="Orphaned Sheet">
+      <table>
+        <view>
+          <datasource-dependencies datasource="Superstore">
+            <column name="[High Value Regions]" />
+          </datasource-dependencies>
+        </view>
+        <panes>
+          <pane>
+            <mark class="Automatic" />
+          </pane>
+        </panes>
+      </table>
+    </worksheet>
+  </worksheets>
+
+  <dashboards>
+    <dashboard name="Executive Overview">
+      <zones>
+        <zone name="Sales by Region" type-v2="worksheet" />
+        <zone name="Profit Ratio by Category" type-v2="worksheet" />
+        <zone name="param-zone" type-v2="paramctrl" param="[Parameter 1]" />
+        <zone name="filter-zone-1" type-v2="filter" />
+        <zone name="filter-zone-2" type-v2="filter" />
+      </zones>
+    </dashboard>
+  </dashboards>
+
+  <actions>
+  </actions>
+</workbook>

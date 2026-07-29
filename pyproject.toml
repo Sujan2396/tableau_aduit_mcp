@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tableau-audit-mcp"
+version = "0.1.0"
+description = "MCP server that audits Tableau .twb/.twbx workbooks for unused assets, duplicate worksheets, and dashboard load-time risk"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Tableau Workbook Audit MCP contributors" }
+]
+keywords = ["tableau", "mcp", "model-context-protocol", "dashboard", "data-visualization", "audit"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "mcp>=1.0.0",
+    "lxml>=5.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/Sujan2396/tableau-audit-mcp"
+Issues = "https://github.com/Sujan2396/tableau-audit-mcp/issues"
+
+[project.scripts]
+tableau-audit-mcp = "server:main"
+
+[tool.setuptools]
+py-modules = ["server"]
+
+[tool.setuptools.packages.find]
+include = ["tableau_audit*"]
